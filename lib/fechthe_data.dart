@@ -3,7 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class FetchTheDataFromFirebase extends StatefulWidget {
-  const FetchTheDataFromFirebase({super.key});
+  final bool data;
+  final bool delete;
+  const FetchTheDataFromFirebase(
+      {super.key, this.data = false, this.delete = false});
 
   @override
   State<FetchTheDataFromFirebase> createState() =>
@@ -45,40 +48,43 @@ class _FetchTheDataFromFirebaseState extends State<FetchTheDataFromFirebase> {
                   ),
                   margin: EdgeInsets.all(10),
                   child: ListTile(
-                    onTap: () {},
-                    leading: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditUserScreen(
-                              documentId:
-                                  documentSnapshot.id, // Pass document ID
-                            ),
-                          ),
-                        );
-                      },
-                      icon: Icon(Icons.edit),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('First Name: $firstName'),
-                        Text('Last Name: $lastName'),
-                        Text('Mobile: $mobile'),
-                        Text('Email: $email'),
-                      ],
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        _showDeleteConfirmationDialog(
-                          context,
-                          documentSnapshot.id,
-                        );
-                      },
-                    ),
-                  ),
+                      onTap: () {},
+                      leading: widget.data
+                          ? IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditUserScreen(
+                                      documentId: documentSnapshot
+                                          .id, // Pass document ID
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.edit),
+                            )
+                          : SizedBox(),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('First Name: $firstName'),
+                          Text('Last Name: $lastName'),
+                          Text('Mobile: $mobile'),
+                          Text('Email: $email'),
+                        ],
+                      ),
+                      trailing: widget.delete
+                          ? IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                _showDeleteConfirmationDialog(
+                                  context,
+                                  documentSnapshot.id,
+                                );
+                              },
+                            )
+                          : SizedBox()),
                 );
               },
             );

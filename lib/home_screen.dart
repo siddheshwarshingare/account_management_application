@@ -58,14 +58,18 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => FetchTheDataFromFirebase()),
+                        builder: (context) => FetchTheDataFromFirebase(
+                              data: true,
+                            )),
                   );
-                  // }
-                  //else if (index == 3) {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(builder: (context) => RetrieveScreen()),
-                  //   );
+                } else if (index == 2) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FetchTheDataFromFirebase(
+                              delete: true,
+                            )),
+                  );
                 }
               },
               child: Container(
